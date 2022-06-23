@@ -33,7 +33,10 @@ def transfer(source, destination): #? ->
         print(destionation + " is not a register.")
 
 def main(Testing):
-    path = sys.argv[1]
+    if Testing:
+        path = "/home/toto/vscode/uni/rtl/rtl-interpreter/test.rtl"
+    else: 
+        path = sys.argv[1]
     program, labels = lexer.extract(path)
 
     ip = 0
@@ -58,10 +61,12 @@ def main(Testing):
         else:
             raise(RuntimeError(f"Symbol not recognized: {command}"))
 
-    lib.printRegisters(registers)
+        if Testing: lib.printRegisters(registers, ram)
+
+    lib.printRegisters(registers, ram)
 
 hardware = set(["ACC", "T1", "T2", "T3", "T4", "MAR", "MBR", "A", "B"])
 
 registers = {}
 
-main(Testing=False)
+main(Testing=True)
