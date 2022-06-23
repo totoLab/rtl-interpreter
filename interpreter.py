@@ -42,13 +42,13 @@ def evaluateExpr(args, operator):
     return result
 
 def ALU(expr):
-    operator = lib.extractOperator(expr)
+    operator = extractOperator(expr)
     args = lib.extractArgs(expr, operator)
-    for arg in args:
-        if arg.isnumeric():
-            pass
-        elif available(arg):
-            pass
+    for i in range(len(args)):
+        if args[i].isnumeric():
+            args[i] = int(args[i])
+        elif available(args[i]):
+            args[i] = registers[args[i]]
     return evaluateExpr(args, operator)
 
 def transferOperands(command):
