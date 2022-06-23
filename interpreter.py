@@ -13,6 +13,11 @@ def available(register, overrideInit=False):
     else:
         raise(RuntimeError(register + " is not a register."))
 
+def extractOperator(expr):
+    for operator in operatorsALU:
+        if operator in expr:
+            return operator
+
 def evaluateExpr(args, operator):
     result = -1000
     if len(args) == 1:
