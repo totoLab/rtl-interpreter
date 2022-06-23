@@ -65,7 +65,7 @@ def extractCondition(expr):
 def transfer(source, destination): #? ->
     if source.isnumeric():
         value = int(source)
-    elif any(ext in source for ext in ["+", "-"]): 
+    elif any(ext in source for ext in operatorsALU): 
         value = int(ALU(source))
     else:  
         if available(destination, True):
@@ -109,7 +109,7 @@ def main(Testing):
     lib.printRegisters(registers, ram)
 
 hardware = set(["ACC", "T1", "T2", "T3", "T4", "MAR", "MBR", "A", "B"])
-
+operatorsALU =  ["+", "-", "OR", "AND"]
 registers = {}
-
+ram = {}
 main(Testing=True)
