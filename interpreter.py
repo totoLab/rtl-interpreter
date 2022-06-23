@@ -58,8 +58,6 @@ def transfer(source, destination): #? ->
                     value = registers[source]
 
     registers[destination] = value
-    else:
-        print(destionation + " is not a register.")
 
 def main(Testing):
     if Testing:
