@@ -22,8 +22,13 @@ def printRegisters(registers, ram):
 
 def extractArgs(expr, operator):
     args = expr.split(operator)
-    for i in range(len(args)):
+    i = 0
+    while i < len(args):
         args[i] = args[i].strip()
+        if len(str(args[i])) < 1:
+            args.pop(i)
+        else:
+            i +=1
     return args
 
 def extractOperator(expr):

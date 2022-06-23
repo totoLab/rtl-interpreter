@@ -15,13 +15,24 @@ def available(register, overrideInit=False):
 
 def evaluateExpr(args, operator):
     result = -1000
-    arg1, arg2 = args
-    arg1 = registers[arg1]
-    arg2 = registers[arg2]
-    if operator == "+":
-        result = arg1 + arg2
-    elif operator == "-":
-        result = arg1 - arg2
+    if len(args) == 1:
+        args = int(args[0])
+        if operator == "OR":
+            result = 0 if args == 0 else 1
+        elif operator == "AND":
+            result = 0 if args == 0 else 1
+    elif len(args) == 2:
+        arg1, arg2 = tuple(args)
+        if operator == "+":
+            result = arg1 + arg2
+        elif operator == "-":
+            result = arg1 - arg2
+        elif operator == "OR":
+            result = 1 if any(arg for arg in args if arg != 0) else 0
+        elif operator == "AND":
+            result = arg1 and arg2
+    else:
+        raise(RuntimeError("Too many arguments."))
 
     return result
 
