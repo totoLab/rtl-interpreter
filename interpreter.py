@@ -12,10 +12,39 @@ def available(register, overrideInit=False):
             raise(RuntimeError(register + " is not initialized."))
     else:
         raise(RuntimeError(register + " is not a register."))
+
+def evaluateExpr(args, operator):
+    result = -1000
+    arg1, arg2 = args
+    arg1 = registers[arg1]
+    arg2 = registers[arg2]
+    if operator == "+":
+        result = arg1 + arg2
+    elif operator == "-":
+        result = arg1 - arg2
+
+    return result
+
+def ALU(expr):
+    operator = lib.extractOperator(expr)
+    args = lib.extractArgs(expr, operator)
+    for arg in args:
+        if arg.isnumeric():
+            pass
+        elif available(arg):
+            pass
+    return evaluateExpr(args, operator)
+
 def transferOperands(command):
     source, destination = command.split("->")
     source, destination = source.strip(), destination.strip()
     return source, destination
+
+def extractCondition(expr):
+    passrip(), destination.strip()
+    if len(operands) != 2:
+        raise(RuntimeError(f"Missing operand/s in command: {command}"))
+    return operands
 
 def transfer(source, destination): #? ->
     if source.isnumeric():
