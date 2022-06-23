@@ -42,11 +42,21 @@ def main(Testing):
         if "->" in command:
             source, destination = transferOperands(command)
             transfer(source, destination)
-        #TODO finish implementing syntax
-
-        if Testing: print(registers)
-
-        ip += 1
+            ip += 1
+        elif "if" in command and "then" in command:
+            condition = extractCondition(command)
+            result = ALU(condition)
+            if (not result):
+                ip = gotoElse()
+            else:
+                ip += 1
+        elif "goto" in command:
+            label = extractLabel()
+            ip = labels[label]
+        elif "0/" in command:
+            ip += 1
+        else:
+            raise(RuntimeError(f"Symbol not recognized: {command}"))
 
     lib.printRegisters(registers)
 
