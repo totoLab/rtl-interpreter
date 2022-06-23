@@ -2,19 +2,33 @@ import sys
 import lexer
 import lib
 
+def available(register, overrideInit=False):
+    if register in hardware:
+        if register in registers:
+            return True
+        else:
+            if overrideInit:
+                return True
+            raise(RuntimeError(register + " is not initialized."))
+    else:
+        raise(RuntimeError(register + " is not a register."))
 def transferOperands(command):
     source, destination = command.split("->")
     source, destination = source.strip(), destination.strip()
     return source, destination
 
 def transfer(source, destination): #? ->
-    if destination in registers:
-        if source in registers:
-            value = registers[source]
-        elif source.isnumeric():
-            value = int(source)
+    if source.isnumeric():
+        value = int(source)
+    elif any(ext in source for ext in ["+", "-"]): 
+        value = int(ALU(source))
+    else:  
+        if available(destination, True):
+            if available(source):
+                if source in registers:
+                    value = registers[source]
 
-        registers[destination] = value
+    registers[destination] = value
     else:
         print(destionation + " is not a register.")
 
@@ -36,16 +50,8 @@ def main(Testing):
 
     lib.printRegisters(registers)
 
-ram = {} #TODO
+hardware = set(["ACC", "T1", "T2", "T3", "T4", "MAR", "MBR", "A", "B"])
 
-registers = {
-    "ACC": 0,
-    "T1": 0,
-    "T2": 0,
-    "T3": 0,
-    "T4": 0,
-    "MAR": 0,
-    "MBR": 0
-}
+registers = {}
 
 main(Testing=False)
